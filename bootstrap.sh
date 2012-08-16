@@ -32,20 +32,28 @@ echo "Installing Vundle\n"
 git clone http://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 
 echo "Adding Haskell VIM plugins (vim2hs, neco-ghc, ghcmod-vim)\n"
-if grep -q vim2hs ~/.vimrc.localc.bundles.local;
+if grep -q vim2hs ~/.vimrc.bundles.local;
 then
+    continue
+else
     echo Bundle \'dag/vim2hs\' >> ~/.vimrc.bundles.local
 fi
 if grep -q neco-ghc ~/.vimrc.bundles.local;
 then
+    continue
+else
     echo Bundle \'ujihisa/neco-ghc\' >> ~/.vimrc.bundles.local
 fi
 if grep -q vimproc ~/.vimrc.bundles.local;
 then
+    continue
+else
     echo Bundle \'Shougo/vimproc\' >> ~/.vimrc.bundles.local
 fi
 if grep -q ghcmod-vim ~/.vimrc.bundles.local;
 then
+    continue
+else
     echo Bundle \'eagletmt/ghcmod-vim\' >> ~/.vimrc.bundles.local
 fi
 
@@ -60,7 +68,7 @@ then
     make -f make_unix.mak
 elif [ $uname == 'Darwin' ];
 then
-    make -f makeke_mac.mak
+    make -f make_mac.mak
 elif [ $uname == 'Cygwin' ];
 then
     make -f make_cygwin.mak
@@ -68,12 +76,12 @@ fi
 
 cd
 
-"Checking whether ghc-mod is in PATH\n"
+'Checking whether ghc-mod is in PATH\n'
 if which -q ghc-mod;
 then
-    echo "Ok, ghc-mod found!\n"
+    echo 'Ok, ghc-mod found!\n'
 else
-    echo "WARNING: ghc-mod not found! For proper working of spf13-vim-haskell add the cabal bin directory to your PATH.\n"
+    echo 'WARNING: ghc-mod not found! For proper working of spf13-vim-haskell add the cabal bin directory to your PATH.\n'
 
-echo "All done! Enjoy spf13-vim-haskell\n"
+echo 'All done! Enjoy spf13-vim-haskell\n'
 
