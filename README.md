@@ -10,7 +10,7 @@ Installation on any OS with bash or sh should be as easy as executing the follow
 
 ```bash
 
-    curl https://github.com/jejansse/Haskim/blob/master/bootstrap.sh -L -o - | sh
+    curl https://raw.github.com/jejansse/Haskim/master/bootstrap.sh -L -o - | sh
     
 ```
 
