@@ -1,0 +1,4 @@
+Bundle 'eagletmt/ghcmod-vim'
+Bundle 'dag/vim2hs'
+Bundle 'ujihisa/neco-ghc'
+Bundle 'Shougo/vimproc'
