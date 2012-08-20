@@ -2,6 +2,8 @@
 
 A Haskell IDE based on the [spf-13](http://github.com/spf13/spf13-vim) VIM distribution and the [neco-ghc](http://github.com/ujihisa/neco-ghc), [vim2hs](http://github.com/dag/vim2hs) and [ghcmod-vim](http://github.com/eagletmt/ghcmod-vim) VIM packages. Among others it features auto-completion (even on imported module references), automatic code checking on save, auto bracket completion and many other things. For a detailed list of features see the aforementioned package links. Note that I do not take credit for implementing these features; Haskim is just a convenient wrapper script for automatically installing and building all the required packages that make this happen.
 
+Note: the spf13-vim install script will backup your existing `.vimrc`. You should probably add the contents of this backup to `.vimrc.local`. Unless you know what you are doing, do *not* overwrite `.vimrc.local` with your `.vimrc` backup since the former contains some fixes for tab-completion in spf13-vim and the automatic checking of your code on write.
+
 # Installation
 
 ## Linux, \*nix, Mac OS X and Cygwin Installation
