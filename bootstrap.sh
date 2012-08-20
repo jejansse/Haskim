@@ -1,87 +1,57 @@
-#!/usr/bin/env sh
+PLATFORM=`uname`
+PREFIX="${HOME}"
 
-endpath="$HOME/.spf13-vim-haskell"
+cd $PREFIX
 
-echo "Thanks for installing spf13-vim-haskell\n"
-
-# Backup existing .vim stuff
-echo "Backing up current vim config\n"
-today=`date +%Y%m%d`
-for i in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc; do [ -e $i ] && mv $i $i.$today; done
-
-
-echo "Cloning spf13-vim\n"
-git clone --recursive -b 3.0 http://github.com/spf13/spf13-vim.git $endpath
-mkdir -p $endpath/.vim/bundle
-ln -s $endpath/.vimrc $HOME/.vimrc
-ln -s $endpath/.vim $HOME/.vim
-
-echo "Checking whether cabal is installed\n"
-if which -s cabal;
+echo "Getting custom .vimrc.local"
+curl http://bit.ly/Rx8H3u -L -o - >> ${PREFIX}/.haskim.vimrc.local
+if [ -e ${PREFIX}/.vimrc.local ]
 then
-    echo "Cabal found!\n"
+    echo "Custom .vimrc.local found; adding missing lines"
+    comm -2 -3 ${PREFIX}/.haskim.vimrc.local ${PREFIX}/.vimrc.local >> ${PREFIX}/.vimrc.local
 else
-    echo "FATAL: Cabal was not found!\n"
-    exit 1
+    cat ${PREFIX}/.haskim.vimrc.local >> ${PREFIX}/.vimrc.local
 fi
+rm ${PREFIX}/.haskim.vimrc.local
 
-echo "Installing ghc-mod\n"
+echo "Getting custom .vimrc.bundles.local"
+curl http://bit.ly/Se6ur6 -L -o - >> ${PREFIX}/.haskim.vimrc.bundles.local
+if [ -e ${PREFIX}/.vimrc.local ]
+then
+    echo "Custom .vimrc.bundles.local found; adding missing lines"
+    comm -2 -3 ${PREFIX}/.haskim.vimrc.bundles.local ${PREFIX}/.vimrc.bundles.local >> ${PREFIX}/.vimrc.bundles.local
+else
+    cat ${PREFIX}/.haskim.vimrc.bundles.local >> ${PREFIX}/.vimrc.bundles.local
+fi
+rm ${PREFIX}/.haskim.vimrc.bundles.local
+
+echo "Getting ghc-mod from hackage"
 cabal install ghc-mod
 
-echo "Installing Vundle\n"
-git clone http://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+echo "Installing spf13-vim"
+curl http://j.mp/spf13-vim3 -L -o - | sh
 
-echo "Adding Haskell VIM plugins (vim2hs, neco-ghc, ghcmod-vim)\n"
-if grep -q vim2hs ~/.vimrc.bundles.local;
-then
-    continue
-else
-    echo Bundle \'dag/vim2hs\' >> ~/.vimrc.bundles.local
-fi
-if grep -q neco-ghc ~/.vimrc.bundles.local;
-then
-    continue
-else
-    echo Bundle \'ujihisa/neco-ghc\' >> ~/.vimrc.bundles.local
-fi
-if grep -q vimproc ~/.vimrc.bundles.local;
-then
-    continue
-else
-    echo Bundle \'Shougo/vimproc\' >> ~/.vimrc.bundles.local
-fi
-if grep -q ghcmod-vim ~/.vimrc.bundles.local;
-then
-    continue
-else
-    echo Bundle \'eagletmt/ghcmod-vim\' >> ~/.vimrc.bundles.local
-fi
-
-echo "Installing plugins using Vundle\n"
-vim +BundleInstall! +BundleInstallleClean +q
-
-echo "Compiling vimproc\n"
-cd ~/.vim/bundle/vimproc/
-uname=`uname`
-if [ $uname == 'Linux' ];
-then
-    make -f make_unix.mak
-elif [ $uname == 'Darwin' ];
+echo "Building vimproc"
+cd ${PREFIX}/.vim/bundle/vimproc/
+if [ $PLATFORM = 'Darwin' ]
 then
     make -f make_mac.mak
-elif [ $uname == 'Cygwin' ];
+elif [ $PLATFORM = 'Cygwin' ]
 then
     make -f make_cygwin.mak
+elif [ $PLATFORM = 'Linux' ]
+then
+    make -f make_unix.mak
 fi
 
-cd
+cd $PREFIX
 
-'Checking whether ghc-mod is in PATH\n'
-if which -q ghc-mod;
+GHC_MOD_LOC=`which ghc-mod`
+if test -z ${GHC_MOD_LOC}
 then
-    echo 'Ok, ghc-mod found!\n'
-else
-    echo 'WARNING: ghc-mod not found! For proper working of spf13-vim-haskell add the cabal bin directory to your PATH.\n'
+    echo "WARNING: Could not find ghc-mod binary in PATH"
+    echo "For a proper working of ghcmod-vim add the binary to your PATH"
+fi
 
-echo 'All done! Enjoy spf13-vim-haskell\n'
+echo "All done! Enjoy Haskim!"
 
