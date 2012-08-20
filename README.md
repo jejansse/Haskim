@@ -1,6 +1,6 @@
 # Haskim
 
-A Haskell IDE based on spf-13 and VIM with auto-completion, auto-checking of code on write, quick-fix support for ghc and more.
+A Haskell IDE based on the [spf-13](http://github.com/spf13/spf13-vim) VIM distribution and the [neco-ghc](http://github.com/ujihisa/neco-ghc), [vim2hs](http://github.com/dag/vim2hs) and [ghcmod-vim](http://github.com/eagletmt/ghcmod-vim) VIM packages. Among others it features auto-completion (even on imported module references), automatic code checking on save, auto bracket completion and many other things. For a detailed list of features see the aforementioned package links. Note that I do not take credit for implementing these features; Haskim is just a convenient wrapper script for automatically installing and building all the required packages that make this happen.
 
 # Installation
 
@@ -9,10 +9,11 @@ A Haskell IDE based on spf-13 and VIM with auto-completion, auto-checking of cod
 Installation on any OS with bash or sh should be as easy as executing the following line:
 
 ```bash
-
-    curl https://raw.github.com/jejansse/Haskim/master/bootstrap.sh -L -o - | sh
-    
+curl https://raw.github.com/jejansse/Haskim/master/bootstrap.sh -L -o - | sh
 ```
+
+At a certain point in the installation you will see an empty VIM window. Just type :q! followed by a carriage return and the installation should proceed.
+You might notice that the terminal will be garbled after closing this VIM window, this is due to spf13-vim and Vundle. Just close it and start a new one to test Haskim.
 
 ## Installing on Windows
 
@@ -21,13 +22,16 @@ Normally, you can still pretty much get the same setup on Windows by installing 
 
 ## Prerequisites
 
-You should have cabal installed. All the other things are handled by the bootstrap script.
+You should have cabal installed and have added the directory with cabal installed binaries to your PATH variable:
+
+```bash
+echo $PATH
+```
+should contain a directory like cabal/bin on Linux or Library/Haskell/bin on Mac.
 
 ## Features
 
 ### Specific features
-
-TODO: add auto-check of ghcmod on write in custom `.vimrc.local` (see ghcmod wiki).
 
 ### spf-13
 
@@ -44,3 +48,8 @@ See http://github.com/ujihisa/neco-ghc for a complete list.
 ### ghcmod-vim
 
 See http://github.com/eagletmt/ghcmod-vim for a complete list.
+
+## Issues
+
+After closing the VIM window that pops up during the installation, the terminal where you ran the bootstrap script will be garbled.
+This is due to spf13-vim or Vundle and cannot be fixed right now. If you want to have it fixed, please contact the maintainers of these packages.
