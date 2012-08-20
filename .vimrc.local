@@ -1,0 +1,3 @@
+au BufEnter * inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+au BufEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+autocmd BufWritePost *.hs GhcModCheckAndLintAsync
