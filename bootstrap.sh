@@ -16,7 +16,7 @@ rm ${PREFIX}/.haskim.vimrc.local
 
 echo "Getting custom .vimrc.bundles.local"
 curl http://bit.ly/Se6ur6 -L -o - >> ${PREFIX}/.haskim.vimrc.bundles.local
-if [ -e ${PREFIX}/.vimrc.local ]
+if [ -e ${PREFIX}/.vimrc.bundles.local ]
 then
     echo "Custom .vimrc.bundles.local found; adding missing lines"
     comm -2 -3 ${PREFIX}/.haskim.vimrc.bundles.local ${PREFIX}/.vimrc.bundles.local >> ${PREFIX}/.vimrc.bundles.local
